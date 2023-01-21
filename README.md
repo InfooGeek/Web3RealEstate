@@ -36,3 +36,9 @@ In a separate terminal execute:
 ### 7. Start frontend
 
 `$ npm run start`
+
+## License
+
+[MIT License](LICENSE)
+
+Yog Raj Dhakal (Loma) - MU
