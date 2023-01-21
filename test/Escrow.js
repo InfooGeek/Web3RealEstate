@@ -7,7 +7,7 @@ const tokens = (n) => {
 
 describe('Escrow', () => {
     let buyer, seller, inspector, lender
-    let realState
+    let realState, escrow
     it('Saves the address', async () => {
         
         [buyer, seller, inspector, lender]= await ethers.getSigners()
@@ -17,8 +17,9 @@ describe('Escrow', () => {
         
         //Mint
 
-
-       // let transaction = await
+        const Escrow = await ethers.getContractFactory('Escrow')
+      //  escrow = await Escrow.deploy( )
+       
         
 })
 })
