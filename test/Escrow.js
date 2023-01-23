@@ -7,19 +7,59 @@ const tokens = (n) => {
 
 describe('Escrow', () => {
     let buyer, seller, inspector, lender
-    let realState, escrow
-    it('Saves the address', async () => {
-        
-        [buyer, seller, inspector, lender]= await ethers.getSigners()
-        //Deploy Real Estate
-        const RealEstate = await ethers.getContractFactory('RealEstate')
-        realEstate = await RealEstate.deploy()
-        
-        //Mint
+    let realEstate, escrow
 
-        const Escrow = await ethers.getContractFactory('Escrow')
-      //  escrow = await Escrow.deploy( )
+    beforeEach(async () => {
+        
+         //setup accounts
+         [buyer, seller, inspector, lender]= await ethers.getSigners()
+         //Deploy Real Estate
+         const RealEstate = await ethers.getContractFactory('RealEstate')
+         realEstate = await RealEstate.deploy()
+         
+         //Mint
+         let transaction = await realEstate.connect(seller).mint("nft-link")
+         await transaction.wait()
+ 
+         const Escrow = await ethers.getContractFactory('Escrow')
+         escrow = await Escrow.deploy(
+             realEstate.address,
+             seller.address,
+             inspector.address,
+             lender.address
+         )
+
+    })
+    describe("Deployment", () => {
+        it("Returns NFT address", async () => {
+            const result = await escrow.nftAddress()
+            expect(result).to.be.equal(realEstate.address)
+        })
+        
+        it("Returns seller", async ()=>{
+           const result = await escrow.seller()
+            expect(result).to.be.equal(seller.address)
+    
+        })
+    
+        it("Returns inspector", async () => {
+            const result = await escrow.inspector()
+            expect(result).to.be.equal(inspector.address)
+        })
+        it("returns lender", async () => {
+            const result = await escrow.lender()
+            expect(result).to.be.equal(lender.address)
+        })  
+    })
+
+
+
+    it('Saves the address', async () => {
        
+       
+        
+       
+
         
 })
 })
